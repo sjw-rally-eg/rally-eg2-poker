@@ -15,16 +15,16 @@ test_hands.valid_hands = {
 
 test_hands.invalid_hands = {
   "empty hand": {
-    "hand": "", "rank": PokerHandRanker.INVALID_INPUT },
+    "hand": "", "exception": PokerHandRanker.NumberOfCardsError },
   "bogus input - single number": {
-    "hand": "5", "rank": PokerHandRanker.INVALID_INPUT },
+    "hand": "5", "exception": PokerHandRanker.NumberOfCardsError },
   "invalid cardrank": {
-    "hand": "hh Qh 6h 2h 9h", "rank": PokerHandRanker.INVALID_INPUT },
+    "hand": "hh Qh 6h 2h 9h", "exception": PokerHandRanker.InvalidCardError },
   "invalid suit": {
-    "hand": "Kp Qh 6h 2h 9h", "rank": PokerHandRanker.INVALID_INPUT },
+    "hand": "Kp Qh 6h 2h 9h", "exception": PokerHandRanker.InvalidCardError },
   "too many cards": {
-    "hand": "Kh Qh 6h 2h 9h 3c", "rank": PokerHandRanker.INVALID_INPUT },
+    "hand": "Kh Qh 6h 2h 9h 3c", "exception": PokerHandRanker.NumberOfCardsError },
   "too few cards": {
-    "hand": "6h 2h 9h 3c", "rank": PokerHandRanker.INVALID_INPUT },
-  "duplicate card": { 
-    "hand": "Kh Kh 6h 2h 9h", "rank": PokerHandRanker.INVALID_INPUT } };
+    "hand": "6h 2h 9h 3c", "exception": PokerHandRanker.NumberOfCardsError },
+  "duplicate card": {
+    "hand": "Kh Kh 6h 2h 9h", "exception": PokerHandRanker.DuplicateCardError } };
