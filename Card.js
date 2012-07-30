@@ -48,7 +48,8 @@ Card.get_instance = function(card_str) {
       card_parts = card_str.match( card_regex ),
       card;
 
-  if( card_parts.length !== 3 ) { // 3: entire match, card-rank, suit
+  // 3 pieces: entire match, card-rank, suit
+  if( !card_parts || card_parts.length !== 3 ) { 
     throw PokerHandRanker.InvalidCardError;
   }
 

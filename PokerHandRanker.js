@@ -27,7 +27,7 @@ PokerHandRanker.prototype.rank_hand = function( raw_hand ) {
     this.rank_result = this.rank_valid_hand();
   } catch( e ) {
     this.rank_result = e.message;
-    throw e;
+    // throw e;
   };
 
   return this.rank_result;

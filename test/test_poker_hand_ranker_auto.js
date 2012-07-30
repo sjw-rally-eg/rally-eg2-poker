@@ -27,12 +27,13 @@ describe("poker hand ranker (automated)", function() {
       },
 
       /** asserts that our results match expectations, complete w/ exception */
-      assert_invalid_results = function( hand, expected_exception ) {
+      assert_invalid_results = function( _hand, _expected_exception ) {
 
-        console.log( 'in INvalid check: '+ hand +' = '+ expected_exception );
+        console.log( 'in INvalid check: '+ _hand +' = '+ _expected_exception );
 
         // make sure it throws the appropriate exception
-        expect( function(){ ranker.rank_hand(hand); } ).toThrow( expected_exception );
+        // expect( function(){ ranker.rank_hand(hand); } ).toThrow( expected_exception );
+        expect( ranker.rank_hand( _hand ) ).toEqual( _expected_exception.message );
       },
 
       hop = Object.hasOwnProperty; // shortcut
