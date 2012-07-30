@@ -14,7 +14,8 @@ var PokerHand = function( raw_hand ) {
 };
 
 PokerHand.prototype.init = function( raw_hand ) {
-  var raw_cards = raw_hand.split(' '), // works ok if hand is a #
+  var trimmed_hand = raw_hand.replace(/^\s\s*/, '').replace(/\s\s*$/, ''),
+      raw_cards = trimmed_hand.split(' '), // works ok if hand is a #
       hand = this,
       card,
       ix = raw_cards.length;

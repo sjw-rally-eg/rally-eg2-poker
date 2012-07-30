@@ -1,0 +1,68 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>rally WAD interview - example #2 - poker hand ranker</title>
+  <meta name="description" content="">
+
+  <meta name="viewport" content="width=device-width">
+  <!--
+  <link rel="stylesheet" href="style-rally.css">
+  -->
+
+  <!-- no need, just slows things down
+  <script src="js/libs/modernizr-2.5.3.min.js"></script> -->
+</head>
+<body>
+  <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+  <header></header>
+  <div role="main">
+    <div id="help">
+      <p>
+      Input a poker hand of the form 'Kh Qh Ah Jh 10h'.
+      </p>
+      <p>
+      I will tell you the rank of the hand, or what was wrong with your input 
+      that kept me from ranking it.
+      </p>
+    </div>
+    <form>
+      <input id="input_hand" type="text" placeholder="Input a poker hand" />
+      <span id="rank_result"></span>
+    </form>
+  </div>
+  <footer></footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="jquery-1.7.2.min.js"><\/script>')</script>
+
+  <script src="Card.js"></script>
+  <script src="PokerHand.js"></script>
+  <script src="PokerHandRanker.js"></script>
+  <script type="text/javascript">
+    $( function() {
+      $('form').submit( function() { return false; });
+      $('#input_hand').change( function() {
+        var raw_input = $(this).val(),
+            ranker = new PokerHandRanker(),
+            rank;
+
+        try {
+          rank = ranker.rank_hand( raw_input );
+        } catch( e ) {
+          rank = ranker.rank_result;
+        }
+
+        $('#rank_result').text( rank );
+
+        return false; // stop form submission
+      });
+    });
+  </script>
+
+</body>
+</html>

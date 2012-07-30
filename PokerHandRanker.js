@@ -8,10 +8,10 @@
  *   var ranking = poker_hand_ranker.rank_hand();
  *   // ... ranking will be: 'Royal Flush'
  */
-var PokerHandRanker = function( raw_hand ) {
-  this.input = raw_hand;  // what the user supplied
-  // this.hand = raw_hand ? new PokerHand( raw_hand ) : null;
-  this.hand = null;
+var PokerHandRanker = function() {
+  this.input = null;        // what the user will supply
+  this.hand = null;         // the valid hand
+  this.rank_result = null;  // the result of the ranking
 };
 
 
@@ -20,18 +20,17 @@ var PokerHandRanker = function( raw_hand ) {
  * and causes the ranking to be done to a valid hand
  */
 PokerHandRanker.prototype.rank_hand = function( raw_hand ) {
-  var rank_result;
 
   // allows all exception handling to be in 1 spot
   try {
     this.recognize_hand( raw_hand );
-    rank_result = this.rank_valid_hand();
+    this.rank_result = this.rank_valid_hand();
   } catch( e ) {
-    rank_result = e.message;
+    this.rank_result = e.message;
     throw e;
   };
 
-  return rank_result;
+  return this.rank_result;
 };
 
 /** performs input validation and parsing into individual cards, if valid */
