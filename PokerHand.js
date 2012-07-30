@@ -1,11 +1,37 @@
 /** holds the 5 valid cards for each hand */
-var PokerHand = function() {
+var PokerHand = function( raw_hand ) {
 
   // the set of cards in the hand
   this.cards = [];
 
   // for handling flush check on add
   this.is_a_flush = false;
+
+  if( raw_hand ) {
+    this.init( raw_hand );
+  }
+
+};
+
+PokerHand.prototype.init = function( raw_hand ) {
+  var raw_cards = raw_hand.split(' '), // works ok if hand is a #
+      hand = this,
+      card,
+      ix = raw_cards.length;
+
+  if( ix != 5 ) {
+    throw PokerHandRanker.NumberOfCardsError;
+  }
+
+  // for( var i=0; i<raw_cards.length; i++ ) {
+  for( ; ix>0; ix-- ) {
+    // throws this.InvalidCardError if nec.
+    card = Card.get_instance( raw_cards[ ix-1 ] );
+
+    // throws this.DuplicateCardError if nec.
+    hand.add( card );
+  }
+
 };
 
 /**
@@ -93,7 +119,8 @@ PokerHand.prototype.is_straight = function() {
   // and rank_order of high card is always exactly 4 more than low card
   // for a straight, just do this:
 
-  return ( this.get_highcard().rank_order - this.get_lowcard().rank_order ) === 4;
+  return ( this.get_highcard().rank_order -
+           this.get_lowcard().rank_order ) === 4;
 };
 
 /**
@@ -224,9 +251,16 @@ PokerHand.prototype.get_rank_text = function() {
 };
 
 PokerHand.prototype.format_ranking = function( rank_ix, high_card ) {
-  var rankings = [  'XXX high', 'Pair (XXX)', '2 Pair (XXX)', 'Trips (XXX)',
-                    'Straight (XXX)', 'Flush (XXX)', 'Full Boat (XXX)',
-                    'Quads (XXX)', 'Straight Flush (XXX)', 'Royal Flush' ],
+  var rankings = [  'XXX high',
+                    'Pair (XXX)',
+                    '2 Pair (XXX)',
+                    'Trips (XXX)',
+                    'Straight (XXX)',
+                    'Flush (XXX)',
+                    'Full Boat (XXX)',
+                    'Quads (XXX)',
+                    'Straight Flush (XXX)',
+                    'Royal Flush' ],
       rank_text = null;
 
   rank_text = rankings[rank_ix].replace( 'XXX', high_card );

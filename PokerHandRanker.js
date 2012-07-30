@@ -1,53 +1,45 @@
-/** *the* global object that drives the work */
-var PokerHandRanker = function(raw_hand) {
+/**
+ * API entry point.
+ *
+ * Usage:
+ *   var hand_str = 'Kh Qh Ah Jh 10h';
+ *   var poker_hand_ranker = new PokerHandRanker( hand_str );
+ *
+ *   var ranking = poker_hand_ranker.rank_hand();
+ *   // ... ranking will be: 'Royal Flush'
+ */
+var PokerHandRanker = function( raw_hand ) {
   this.input = raw_hand;  // what the user supplied
-  this.hand = new PokerHand();
+  // this.hand = raw_hand ? new PokerHand( raw_hand ) : null;
+  this.hand = null;
 };
 
 
-/** This does the validation work and causes the ranking to be done to a valid hand */
+/**
+ * This does the validation work,
+ * and causes the ranking to be done to a valid hand
+ */
 PokerHandRanker.prototype.rank_hand = function( raw_hand ) {
   var rank_result;
 
-  // reuse raw hand from constructor, if extant
-  this.input = raw_hand ? raw_hand : this.input;
-  console.log( this.input );
-
-  // put this on the hand
-  // this.rank_result = PokerHandRanker.INVALID_INPUT;
-
+  // allows all exception handling to be in 1 spot
   try {
-    this.recognize_hand();
+    this.recognize_hand( raw_hand );
     rank_result = this.rank_valid_hand();
   } catch( e ) {
-    // this.rank_result = e.message;
-    // this.hand.rank_result = e.message;
     rank_result = e.message;
-    console.log(this.hand);
     throw e;
   };
 
-  // return this.hand.rank_result;
   return rank_result;
 };
 
 /** performs input validation and parsing into individual cards, if valid */
-PokerHandRanker.prototype.recognize_hand = function() {
-  var raw_cards = this.input.split(' '), // works ok if hand is a #
-      hand = this.hand,
-      card;
+PokerHandRanker.prototype.recognize_hand = function( raw_hand ) {
 
-  if( raw_cards.length != 5 ) {
-    throw this.NumberOfCardsError;
-  }
-
-  for( var i=0; i<raw_cards.length; i++ ) {
-    // throws this.InvalidCardError if nec.
-    card = Card.get_instance( raw_cards[i] );
-
-    // throws this.DuplicateCardError if nec.
-    hand.add( card );
-    console.log(card);
+  if( !this.hand ) {
+    this.hand = new PokerHand( raw_hand );
+    this.input = raw_hand;
   }
 
 };
