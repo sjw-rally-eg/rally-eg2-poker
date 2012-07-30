@@ -135,7 +135,19 @@ PokerHand.prototype.get_lowcard = function() {
 };
 
 /**
- * Returns count of high or low cards, depending on arg fn.
+ * Returns max of cardrank count.
+ */
+PokerHand.prototype.get_max_cardrank_count = function() {
+  var max_count = this.get_cardrank_count( 4 ); // count of hi cardrank
+
+  // ... vs. count of lo cardrank
+  max_count = Math.max( max_count, this.get_cardrank_count( 0 ) );
+
+  return max_count;
+};
+
+/**
+ * Returns count of high or low cards, depending on arg ix.
  */
 PokerHand.prototype.get_cardrank_count = function( card_ix ) {
   var count = 0,
@@ -155,11 +167,11 @@ PokerHand.prototype.get_cardrank_count = function( card_ix ) {
 PokerHand.prototype.get_rank_text = function() {
   var ranking_text,
       pluralize = true,
-      highcard_str = this.get_highcard().rank_label,
-      highcard_count = this.get_cardrank_count( 4 ), // use index of high card
+      bestcard_str = this.get_highcard().rank_label,
+      max_cardrank_count = this.get_max_cardrank_count(), // use index of high card
       rank_ix = -1; // error unless set
 
-  switch( highcard_count ) {
+  switch( max_cardrank_count ) {
   case 1:
     if( this.is_straightflush() ) {
       if( this.is_royalflush() ) {
@@ -187,7 +199,11 @@ PokerHand.prototype.get_rank_text = function() {
     }
     break;
   case 3: // trips or full boat
-    if( this.get_cardrank_count( 0 ) === 2 ) { // 2 of low card rank; boat!
+    if( this.get_cardrank_count( 0 ) > 1 ) { // >1 of low card rank; boat!
+      // check if lo card is the over...
+      if( this.get_cardrank_count( 0 ) > this.get_cardrank_count( 4 ) ) {
+        bestcard_str = this.cards[0].rank_label;
+      }
       rank_ix = 6;
     } else { // measly trips
       rank_ix = 3;
@@ -198,11 +214,11 @@ PokerHand.prototype.get_rank_text = function() {
     break;
   default: // should *never* happen, given card validation and dupe check
     throw { name: 'InvalidHighCardCountError',
-      message: 'high card count ('+highcard_count+') is wrong' };
+      message: 'max cardrank count ('+max_cardrank_count+') is wrong' };
   }
 
-  // highcard_str += (pluralize ? 's' : '');
-  ranking_text = this.format_ranking( rank_ix, highcard_str  );
+  // bestcard_str += (pluralize ? 's' : '');
+  ranking_text = this.format_ranking( rank_ix, bestcard_str  );
 
   return ranking_text;
 };
