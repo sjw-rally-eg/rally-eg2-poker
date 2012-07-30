@@ -1,0 +1,16 @@
+# standard 'ignore me' dir - mostly archive files (packrat!) but some dev
+_arc
+
+# output dir
+dist
+
+# ignore - temp dir?
+download
+
+# ignore for now - working on faux server
+server
+
+# gvim temp files:
+*~
+*.swo
+*.swp
