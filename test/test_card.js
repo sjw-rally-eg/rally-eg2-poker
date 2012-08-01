@@ -2,25 +2,20 @@ describe("poker card", function() {
 
   var card;
 
-  describe("valid card", function() {
+  var card_str1 = "Ac";
+  describe("valid card ["+card_str1+"]", function() {
     it("creates instance OK", function() {
-      var card_str = "Ac";
-
-      card = Card.get_instance( card_str );
+      card = Card.get_instance( card_str1 );
       expect( card ).toBeDefined();
+      xexpect( card.to_string() ).toBeEqual( 'Ac' );
     });
   });
 
-  describe("invalid card", function() {
-    it("creates instance OK", function() {
-      var card_str = "10hx",
-          card;
-
-      try {
-        card = Card.get_instance( card_str );
-      } catch( e ) {
-      }
-      expect( card ).toBeUndefined();
+  var card_str2 = "10hx",
+  describe("invalid card ["+card_str2+"], function() {
+    it("throws correct exception", function() {
+      expect( function(){ Card.get_instance( card_str2 );} ).toThrow(
+        PokerHandRanker.InvalidCardError );
     });
   });
 
