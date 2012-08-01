@@ -159,7 +159,7 @@ PokerHand.prototype.is_royalflush = function() {
   // and validate() is called by these methods...
   return  this.is_flush() &&
     this.is_straight() &&
-    this.get_highcard().rank_label === 'Ace';
+    this.get_lowcard().rank_label === 'Ten';
 };
 
 /**

@@ -11,7 +11,10 @@ test_hands.valid_hands = {
   "full boat:hi":   { "hand": "Ah 10d 10c Ac Ad", "rank": "Full Boat (Ace)" },
   "full boat:lo":   { "hand": "10h 10d 10c Ac Ad", "rank": "Full Boat (Ten)" },
   "quads":          { "hand": "10h 10d 10c 10s 2d", "rank": "Quads (Ten)" },
-  "straight flush": { "hand": "3d 6d 2d 4d 5d", "rank": "Straight Flush (Six)" },
+  "straight flush":
+    { "hand": "3d 6d 2d 4d 5d", "rank": "Straight Flush (Six)" },
+  "straight flush:wheel":
+    { "hand": "3d Ad 2d 4d 5d", "rank": "Straight Flush (Five)" },
   "royal flush":    { "hand": "Kh Qh Ah Jh 10h", "rank": "Royal Flush" } };
 
 test_hands.invalid_hands = {
