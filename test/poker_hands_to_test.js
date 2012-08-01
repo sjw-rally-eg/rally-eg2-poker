@@ -28,10 +28,9 @@ test_hands.invalid_hands = {
     "hand": "Kh Qh 6h 2h 9h 3c", "exception": PokerHandRanker.NumberOfCardsError },
   "too few cards": {
     "hand": "6h 2h 9h 3c", "exception": PokerHandRanker.NumberOfCardsError },
-  // should fail
   "too few cards - trailing space": {
-    "hand": "6h 2h 9h 3c ", "exception": "foo" },
+    "hand": "6h 2h 9h 3c ", "exception": PokerHandRanker.NumberOfCardsError },
   "too few cards - leading space": {
-    "hand": "6h 2h 9h 3c ", "exception": "foo" },
+    "hand": " 6h 2h 9h 3c", "exception": PokerHandRanker.NumberOfCardsError },
   "duplicate card": {
     "hand": "Kh Kh 6h 2h 9h", "exception": PokerHandRanker.DuplicateCardError } };
