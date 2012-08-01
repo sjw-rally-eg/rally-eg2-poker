@@ -16,7 +16,6 @@ describe("poker hand ranker (automated)", function() {
 
       /** asserts that our results match expectations */
       assert_results = function( _hand, _expected_rank ) {
-        console.log( 'in valid check: '+ _hand +' = '+ _expected_rank );
 
         expect( _hand ).toBeDefined();
         expect( _expected_rank ).toBeDefined();
@@ -27,13 +26,10 @@ describe("poker hand ranker (automated)", function() {
       },
 
       /** asserts that our results match expectations, complete w/ exception */
-      assert_invalid_results = function( _hand, _expected_exception ) {
-
-        console.log( 'in INvalid check: '+ _hand +' = '+ _expected_exception );
+      assert_invalid_results = function( _ranker, _hand, _expected_exception ) {
 
         // make sure it throws the appropriate exception
-        // expect( function(){ ranker.rank_hand(hand); } ).toThrow( expected_exception );
-        expect( ranker.rank_hand( _hand ) ).toEqual( _expected_exception.message );
+        expect( _ranker.rank_hand( _hand ) ).toEqual( _expected_exception.message );
       },
 
       hop = Object.hasOwnProperty; // shortcut
@@ -43,19 +39,15 @@ describe("poker hand ranker (automated)", function() {
    */
   describe("INvalid hands", function() {
 
-    beforeEach( function() {
-      // get a new object before each test
-      ranker = new PokerHandRanker();
-    });
-
     it('calls an inVALID hand inVALID', function() {
       for( hand_type in invalid_hands ) {
         if( hop.call( invalid_hands, hand_type ) ) {
+          ranker = new PokerHandRanker();
           hand_io = invalid_hands[ hand_type ];
           hand = hand_io.hand;
           expected_exception = hand_io.exception;
 
-          assert_invalid_results( hand, expected_exception );
+          assert_invalid_results( ranker, hand, expected_exception );
         }
       }
     });
@@ -67,10 +59,6 @@ describe("poker hand ranker (automated)", function() {
    */
   describe("valid hands", function() {
 
-    beforeEach( function() {
-      // get a new object before each test
-    });
-
     it('calls a VALID hand VALID', function() {
       for( hand_type in valid_hands ) {
         if( hop.call( valid_hands, hand_type ) ) {
@@ -79,7 +67,7 @@ describe("poker hand ranker (automated)", function() {
           hand = hand_io.hand;
           expected_rank = hand_io.rank;
 
-          console.log( 'before valid check: ('+hand_type +') '+ hand +' = '+ expected_rank );
+          console.log( 'before valid check: ['+hand_type +'] '+ hand +' = '+ expected_rank );
 
           assert_results( hand, expected_rank );
         }
