@@ -50,7 +50,7 @@ Card.get_instance = function(card_str) {
 
   // 3 pieces: entire match, card-rank, suit
   if( !card_parts || card_parts.length !== 3 ) { 
-    throw PokerHandRanker.InvalidCardError;
+    throw Card.prototype.InvalidCardError;
   }
 
   card = new Card( card_parts[1], card_parts[2] );
@@ -63,4 +63,10 @@ Card.get_instance = function(card_str) {
  */
 Card.prototype.to_string = function() {
   return this.rank_code + this.suit;
+};
+
+/** wrong cardrank or suit */
+Card.prototype.InvalidCardError = {
+  name: 'InvalidCardError',
+  message: 'Each card must start with rank (A,K,J, or 2-10) and end with suit (c,d,h,s) - case sensitive!'
 };

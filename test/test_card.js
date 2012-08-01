@@ -7,15 +7,15 @@ describe("poker card", function() {
     it("creates instance OK", function() {
       card = Card.get_instance( card_str1 );
       expect( card ).toBeDefined();
-      xexpect( card.to_string() ).toBeEqual( 'Ac' );
+      expect( card.to_string() ).toEqual( 'Ac' );
     });
   });
 
-  var card_str2 = "10hx",
-  describe("invalid card ["+card_str2+"], function() {
+  var card_str2 = "10hx";
+  describe("invalid card ["+card_str2+"]", function() {
     it("throws correct exception", function() {
-      expect( function(){ Card.get_instance( card_str2 );} ).toThrow(
-        PokerHandRanker.InvalidCardError );
+      expect( function(){ Card.get_instance( card_str2 ); } ).toThrow(
+        Card.prototype.InvalidCardError );
     });
   });
 

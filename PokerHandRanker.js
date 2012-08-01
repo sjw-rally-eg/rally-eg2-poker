@@ -52,30 +52,8 @@ PokerHandRanker.prototype.rank_valid_hand = function() {
   return hand_rank_text;
 };
 
-//--------------------------------------------------------------------------
-// exceptions and error state
-//--------------------------------------------------------------------------
-
 /**
  * The rank for any invalid input.
  * Object property so as to be available for DRY testing etc.
  */
 PokerHandRanker.INVALID_INPUT = '** INPUT is INVALID **';
-
-/** wrong # of cards */
-PokerHandRanker.NumberOfCardsError = {
-  name: 'NumberOfCardsError',
-  message: 'There must be exactly 5 cards in a hand (single-space delimited)'
-};
-
-/** wrong cardrank or suit */
-PokerHandRanker.InvalidCardError = {
-  name: 'InvalidCardError',
-  message: 'Each card must start with rank (A,K,J, or 2-10) and end with suit (c,d,h,s) - case sensitive!'
-};
-
-/** wrong cardrank or suit */
-PokerHandRanker.DuplicateCardError = {
-  name: 'DuplicateCardError',
-  message: 'Hand must have only one of each card'
-};

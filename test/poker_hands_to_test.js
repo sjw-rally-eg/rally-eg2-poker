@@ -15,22 +15,30 @@ test_hands.valid_hands = {
 
 test_hands.invalid_hands = {
   "empty hand": {
-    "hand": "", "exception": PokerHandRanker.NumberOfCardsError },
+    "hand": "", "exception": PokerHand.prototype.NumberOfCardsError },
   "bogus input - single number": {
-    "hand": "5", "exception": PokerHandRanker.NumberOfCardsError },
+    "hand": "5", "exception": PokerHand.prototype.NumberOfCardsError },
   "invalid cardrank": {
-    "hand": "hh Qh 6h 2h 9h", "exception": PokerHandRanker.InvalidCardError },
+    "hand": "hh Qh 6h 2h 9h",
+    "exception": Card.prototype.InvalidCardError },
   "invalid suit": {
-    "hand": "Kp Qh 6h 2h 9h", "exception": PokerHandRanker.InvalidCardError },
+    "hand": "Kp Qh 6h 2h 9h",
+    "exception": Card.prototype.InvalidCardError },
   "invalid suit": {
-    "hand": "Kp Qh 6h 2h 10px", "exception": PokerHandRanker.InvalidCardError },
+    "hand": "Kp Qh 6h 2h 10px",
+    "exception": Card.prototype.InvalidCardError },
   "too many cards": {
-    "hand": "Kh Qh 6h 2h 9h 3c", "exception": PokerHandRanker.NumberOfCardsError },
+    "hand": "Kh Qh 6h 2h 9h 3c",
+    "exception": PokerHand.prototype.NumberOfCardsError },
   "too few cards": {
-    "hand": "6h 2h 9h 3c", "exception": PokerHandRanker.NumberOfCardsError },
+    "hand": "6h 2h 9h 3c",
+    "exception": PokerHand.prototype.NumberOfCardsError },
   "too few cards - trailing space": {
-    "hand": "6h 2h 9h 3c ", "exception": PokerHandRanker.NumberOfCardsError },
+    "hand": "6h 2h 9h 3c ",
+    "exception": PokerHand.prototype.NumberOfCardsError },
   "too few cards - leading space": {
-    "hand": " 6h 2h 9h 3c", "exception": PokerHandRanker.NumberOfCardsError },
+    "hand": " 6h 2h 9h 3c",
+    "exception": PokerHand.prototype.NumberOfCardsError },
   "duplicate card": {
-    "hand": "Kh Kh 6h 2h 9h", "exception": PokerHandRanker.DuplicateCardError } };
+    "hand": "Kh Kh 6h 2h 9h",
+    "exception": PokerHand.prototype.DuplicateCardError } };

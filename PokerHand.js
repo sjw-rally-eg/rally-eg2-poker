@@ -10,7 +10,7 @@ var PokerHand = function( raw_hand ) {
   if( raw_hand ) {
     this.init( raw_hand );
   } else {
-    throw PokerHandRanker.NumberOfCardsError;
+    throw this.NumberOfCardsError;
   }
 
 };
@@ -23,12 +23,12 @@ PokerHand.prototype.init = function( raw_hand ) {
       ix = raw_cards.length;
 
   if( ix != 5 ) {
-    throw PokerHandRanker.NumberOfCardsError;
+    throw this.NumberOfCardsError;
   }
 
   // for( var i=0; i<raw_cards.length; i++ ) {
   for( ; ix>0; ix-- ) {
-    // throws this.InvalidCardError if nec.
+    // throws Card.prototype.InvalidCardError if nec.
     card = Card.get_instance( raw_cards[ ix-1 ] );
 
     // throws this.DuplicateCardError if nec.
@@ -40,7 +40,7 @@ PokerHand.prototype.init = function( raw_hand ) {
 /**
  * Adds card to the hand, unless it's a duplicate.
  * NOTE: this will cause ASC sort after 5th card added.
- * @throws PokerHandRanker.DuplicateCardError if duplicate of extant card.
+ * @throws this.DuplicateCardError if duplicate of extant card.
  */
 PokerHand.prototype.add = function( card ) {
   var cards = this.cards,
@@ -48,7 +48,7 @@ PokerHand.prototype.add = function( card ) {
 
   for( ; ix>0; ix-- ) {
     if( card.to_string() === cards[ ix-1 ].to_string() ) {
-      throw PokerHandRanker.DuplicateCardError;
+      throw this.DuplicateCardError;
     }
   }
 
@@ -148,11 +148,11 @@ PokerHand.prototype.is_royalflush = function() {
 
 /**
  * Validates the hand.
- * @throws PokerHandRanker.NumberOfCardsError if length is wrong.
+ * @throws this.NumberOfCardsError if length is wrong.
  */
 PokerHand.prototype.validate = function() {
   if( this.cards.length !== 5 ) {
-    throw PokerHandRanker.NumberOfCardsError;
+    throw this.NumberOfCardsError;
   }
 };
 
@@ -269,4 +269,16 @@ PokerHand.prototype.format_ranking = function( rank_ix, high_card ) {
   rank_text = rankings[rank_ix].replace( 'XXX', high_card );
 
   return rank_text;
+};
+
+/** wrong # of cards */
+PokerHand.prototype.NumberOfCardsError = {
+  name: 'NumberOfCardsError',
+  message: 'There must be exactly 5 cards in a hand (single-space delimited)'
+};
+
+/** wrong cardrank or suit */
+PokerHand.prototype.DuplicateCardError = {
+  name: 'DuplicateCardError',
+  message: 'Hand must have only one of each card'
 };
