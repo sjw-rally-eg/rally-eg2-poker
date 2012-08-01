@@ -9,6 +9,8 @@ var PokerHand = function( raw_hand ) {
 
   if( raw_hand ) {
     this.init( raw_hand );
+  } else {
+    throw PokerHandRanker.NumberOfCardsError;
   }
 
 };
