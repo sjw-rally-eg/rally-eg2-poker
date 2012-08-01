@@ -1,7 +1,12 @@
+/*jslint browser: true, debug: false, indent: 2, vars: false *//*global $ */
 /**
  * Constructs a new card given [rank_code] and [suit].
+ * @arg rank_code a 1 or 2 character designator for the rank of the card.
+ *      eg: A (for Ace) or 10 (for 10)
+ * @arg suit a 1 letter designator for the suit of the card.
+ *      eg: c (for clubs), d, h, s
  */
-var Card = function( rank_code, suit ) {      // eg: A, s ...
+var Card = function (rank_code, suit) {
 
   var rank_coded_hash = {
     '2':  [ 'Two',    0 ],
@@ -19,14 +24,14 @@ var Card = function( rank_code, suit ) {      // eg: A, s ...
     'A':  [ 'Ace',   12 ]
   };
 
-  this.get_rank_label = function( rc ) {
+  this.get_rank_label = function (rc) {
     var rank_code = rc ? rc : this.rank_code;
-    return rank_coded_hash[ rank_code ][0];
+    return rank_coded_hash[rank_code][0];
   };
 
-  this.get_rank_order = function( rc ) {
+  this.get_rank_order = function (rc) {
     var rank_code = rc ? rc : this.rank_code;
-    return rank_coded_hash[ rank_code ][1];
+    return rank_coded_hash[rank_code][1];
   };
 
   this.rank_code = rank_code;                 // ... A
@@ -43,17 +48,17 @@ var Card = function( rank_code, suit ) {      // eg: A, s ...
  * Generates a card based on [card_str] of the form '10s', 'Kc', etc.
  * (factory method).
  */
-Card.get_instance = function(card_str) {
+Card.get_instance = function (card_str) {
   var card_regex = /^([AKQJ]|10|[2-9])([cdhs])$/,
-      card_parts = card_str.match( card_regex ),
+      card_parts = card_str.match(card_regex),
       card;
 
   // 3 pieces: entire match, card-rank, suit
-  if( !card_parts || card_parts.length !== 3 ) { 
+  if (!card_parts || card_parts.length !== 3) {
     throw Card.prototype.InvalidCardError;
   }
 
-  card = new Card( card_parts[1], card_parts[2] );
+  card = new Card(card_parts[1], card_parts[2]);
 
   return card;
 };
@@ -61,7 +66,7 @@ Card.get_instance = function(card_str) {
 /**
  * Outputs string of the form '10s', 'Kc', etc.
  */
-Card.prototype.to_string = function() {
+Card.prototype.to_string = function () {
   return this.rank_code + this.suit;
 };
 

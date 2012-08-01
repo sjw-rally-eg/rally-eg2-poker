@@ -1,0 +1,25 @@
+<project name="rally-eg2-poker" default="jslint">
+  <description>
+    Rally Web App Developer job interview requires a code example to be submitted.
+    This project tackles example #2 - ranking a poker hand.
+    This ant script prepares the files for deployment, including jslint.
+  </description>
+
+
+  <target name="jslint" description="run jslint on src files">
+    <property name="rhino.jar" value="${basedir}/test/rhino-1.7r4.jar"/>
+    <property name="jslint.js" value="${basedir}/test/jslint.js"/>
+    <echo message="js linting..."/>
+    <apply executable="java" parallel="false">
+      <filelist dir="${basedir}">
+        <file name="Card.js"/>
+        <file name="PokerHand.js"/>
+        <file name="PokerHandRanker.js"/>
+      </filelist>
+      <arg line="-jar"/>
+      <arg path="${rhino.jar}"/>
+      <arg path="${jslint.js}"/>
+    </apply>
+  </target>
+
+</project>
