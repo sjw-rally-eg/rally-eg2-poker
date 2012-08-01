@@ -6,6 +6,7 @@ test_hands.valid_hands = {
   "two pair":       { "hand": "Kh Kc 3s 3h 2d", "rank": "2 Pair (King)" },
   "trips":          { "hand": "Kh Kc 3s 9h Kd", "rank": "Trips (King)" },
   "straight":       { "hand": "9c Jc 8h 10d Qh", "rank": "Straight (Queen)" },
+  "straight:wheel": { "hand": "4c 5c Ah 2d 3h", "rank": "Straight (Five)" },
   "flush":          { "hand": "Kh Qh 6h 2h 9h", "rank": "Flush (King)" },
   "full boat:hi":   { "hand": "Ah 10d 10c Ac Ad", "rank": "Full Boat (Ace)" },
   "full boat:lo":   { "hand": "10h 10d 10c Ac Ad", "rank": "Full Boat (Ten)" },

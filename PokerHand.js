@@ -4,6 +4,9 @@ var PokerHand = function( raw_hand ) {
   // the set of cards in the hand
   this.cards = [];
 
+  // will be set true in check for straight if is wheel straight
+  this.is_wheel = false;
+
   // for handling flush check on add
   this.is_a_flush = false;
 
@@ -115,15 +118,28 @@ PokerHand.prototype.is_flush = function() {
  * Will blow up if hand is not valid.
  */
 PokerHand.prototype.is_straight = function() {
+  var is_a_straight = false,
+      hi_card_rankorder = this.get_highcard().rank_order,
+      lo_card_rankorder = this.get_lowcard().rank_order;
 
   this.validate(); // prophylactic
 
   // since cards are ASC sorted immediately after 5th card added,
   // and rank_order of high card is always exactly 4 more than low card
-  // for a straight, just do this:
+  // for a normal straight, just do this:
+  is_a_straight = hi_card_rankorder - lo_card_rankorder === 4;
 
-  return ( this.get_highcard().rank_order -
-           this.get_lowcard().rank_order ) === 4;
+  // now check for a wheel - high card (by pure rank) MUST be an ace,
+  // and the diff between 2nd high card and low is then 3 (5 to 2).
+  if( !is_a_straight ) {
+    if( hi_card_rankorder === 12 &&
+        this.cards[3].rank_order - lo_card_rankorder === 3 ) {
+      is_a_straight = true;
+      this.is_wheel = true;
+    }
+  }
+
+  return is_a_straight;
 };
 
 /**
@@ -154,6 +170,10 @@ PokerHand.prototype.validate = function() {
   if( this.cards.length !== 5 ) {
     throw this.NumberOfCardsError;
   }
+};
+
+PokerHand.prototype.get_real_highcard = function() {
+  return this.is_wheel ? this.cards[3] : this.cards[4];
 };
 
 PokerHand.prototype.get_highcard = function() {
@@ -197,8 +217,8 @@ PokerHand.prototype.get_cardrank_count = function( card_ix ) {
 PokerHand.prototype.get_rank_text = function() {
   var ranking_text,
       pluralize = true,
-      bestcard_str = this.get_highcard().rank_label,
-      max_cardrank_count = this.get_max_cardrank_count(), // use index of high card
+      bestcard_str,
+      max_cardrank_count = this.get_max_cardrank_count(), // use index of hicard
       rank_ix = -1; // error unless set
 
   switch( max_cardrank_count ) {
@@ -247,7 +267,8 @@ PokerHand.prototype.get_rank_text = function() {
       message: 'max cardrank count ('+max_cardrank_count+') is wrong' };
   }
 
-  // bestcard_str += (pluralize ? 's' : '');
+  bestcard_str = bestcard_str || this.get_real_highcard().rank_label;
+
   ranking_text = this.format_ranking( rank_ix, bestcard_str  );
 
   return ranking_text;
